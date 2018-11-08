@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pdf.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,21 +11,20 @@ namespace Pdf.Controllers
     {
         public ActionResult Index()
         {
+            var pdf = new GeneratePdf();
+            var newPdf = pdf.TestPdf();
+            Response.Clear();
+            Response.ContentType = "application/pdf"; string pdfName = "User";
+            Response.AddHeader("Content-Disposition", "attachment; filename=" + pdfName + ".pdf");
+            Response.ContentType = "application/pdf";
+            Response.Buffer = true;
+            Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
+            Response.BinaryWrite(newPdf);
+            Response.End();
+            Response.Close();
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
+        
     }
 }
